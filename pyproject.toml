@@ -1,0 +1,45 @@
+[project]
+name = "pretix-custom-fonts"
+dynamic = ["version"]
+description = "Custom fonts for internal poLANd.tf use"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+keywords = ["pretix"]
+authors = [
+    {name = "poland.tf Staff", email = "staff@poland.tf"},
+    {name = "pretix team", email = "support@pretix.eu"},
+]
+maintainers = [
+    {name = "poland.tf Staff", email = "staff@poland.tf"},
+]
+
+dependencies = [
+
+]
+
+[project.entry-points."pretix.plugin"]
+pretix_customfonts = "pretix_customfonts:PretixPluginMeta"
+
+[project.entry-points."distutils.commands"]
+build = "pretix_plugin_build.build:CustomBuild"
+
+[build-system]
+requires = [
+    "setuptools",
+    "pretix-plugin-build",
+]
+
+[project.urls]
+homepage = "https://github.com/poLANd-tf/pretix-custom-fonts"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = {attr = "pretix_customfonts.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["pretix*"]
+namespaces = true

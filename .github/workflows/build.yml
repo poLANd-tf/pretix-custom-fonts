@@ -1,0 +1,37 @@
+name: Build Python package
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+          architecture: 'x64'
+      - name: Download font
+        shell: bash
+        run: |
+          curl --fail --location --show-error --silent \
+            --retry 3 --connect-timeout 15 --max-time 60 \
+            --output /tmp/fonts.zip https://supra.tf/fonts.zip
+          unzip -o /tmp/fonts.zip \
+            -d pretix_customfonts/static/pretix_customfonts/
+      - name: Build a Python package
+        run: python -c "import sys; print(sys.version)"
+      - name: Upload distributions
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-dists
+          path: dist/
