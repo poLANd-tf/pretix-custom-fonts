@@ -34,8 +34,15 @@ jobs:
           pip install build setuptools
       - name: Build a Python package
         run: "python -m build"
-      - name: Upload distributions
+      - name: Upload wheel artifact
         uses: actions/upload-artifact@v7
         with:
-          name: release-dists
-          path: dist/
+          name: pretix_custom_fonts-1.0.0-py3-none-any.whl
+          path: dist/pretix_custom_fonts-1.0.0-py3-none-any.whl
+          archive: false
+      - name: Upload wheel artifact (archive)
+        uses: actions/upload-artifact@v7
+        with:
+          name: pretix_custom_fonts-1.0.0.tar.gz
+          path: dist/pretix_custom_fonts-1.0.0.tar.gz
+          archive: false
